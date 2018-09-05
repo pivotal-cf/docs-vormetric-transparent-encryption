@@ -1,115 +1,139 @@
 ---
-title: YOUR-PRODUCT-NAME (Beta)
+title: Vormetric Transparent Encryption for PCF
 owner: Partners
 ---
 
 <p class="note warning">
 <strong>WARNING! </strong>
-The PRODUCT-NAME for PCF tile is currently in beta and is intended for evaluation and test purposes only. 
+The Vormetric Transparent Encryption for PCF is currently in Beta and is intended for evaluation and test purposes only.
 Do not use this product in a PCF production environment.
 </p>
 
-**This topic begins with a brief description of what the product tile (e.g. Apigee Edge Service Broker for PCF) does, 
-whereas the Overview section below describes what the service itself (e.g. Apigee Edge) does. See below for an example.**
 
-This documentation describes the Apigee Edge Service Broker for Pivotal Cloud Foundry (PCF). The Apigee Edge Service 
-Broker for PCF enables developers to manage APIs for their PCF apps through the Apigee Edge management console.
+This documentation describes the Vormetric Transparent Encryption (VTE) for Pivotal Cloud Foundry (PCF).  Vormetric
+Transparent Encryption for PCF works in conjunction with other on-demand PCF products by encrypting the data of the
+products with access control, allowing security administrators to manage and monitor the instances through the console of the Vormetric Data Security Manager (DSM).
 
-**Note**: This description will appear under **OVERVIEW** in the tile's listing on 
-[Pivotal Network](http://network.pivotal.io).
 
 ## <a id='overview'></a>Overview
 
-**The overview describes the service that your product offers to PCF developers. 
-Make sure to overview the features of the integration.
-Don't focus only on the overview of your product that is being integrated.
-See below for an example.**
+Vormetric Transparent Encryption (VTE) for PCF protects data stored within PCF products with file-level encryption and
+access control, effectively limiting data file access to only allowed users, groups, and processes.  This combination enables
+organizations to meet compliance requirements and best practices for data security, including access control for
+administrators of the Pivotal environment.
 
-The Apigee Edge Service Broker for PCF registers a service broker with PCF and exposes its service plans on the 
-Marketplace. Developers can then create service plan instances using Apps Manager or the Cloud Foundry Command 
-Line Interface (cf CLI) and bind them to their apps.
+The solution is a BOSH addon and supports multi-tenancy.  A Registration Service maps tenant organizations and spaces as
+defined in Pivotal Apps Manager to domains within a Vormetric data security management environment.  Once registered,
+the Vormetric tile protects directories based on pre-configured encryption keys and policies.  Domains within this
+management environment can isolate management of data security policies and keys for specific PCF instances to specific
+organizations or business units.
 
-Creating an Apigee Edge for PCF service instance and binding it to an app creates an Apigee Edge API proxy that 
-handles requests for the app. This lets developers use the Apigee Edge management console to manage API request 
-handling between clients and the app.
+A Vormetric Data Security Manager is required to use the VTE tile.
 
-**Note**: This overview will appear under **OVERVIEW**, combined with the description above in the tile's listing on 
-[Pivotal Network](http://network.pivotal.io).
+The Vormetric Transparent Encryption for PCF currently supports the following PCF products:
+
+* PCF MySQL v2.4.0 or above
+
 
 ## <a id='features'></a>Key Features
 
-**Note**: This feature list will appear under **FEATURES** in the tile's listing on 
-[Pivotal Network](http://network.pivotal.io). 
-Make sure you list the key features of the tile (the integration). 
-We cannot accept a list of the key features of your product that we are integrating.
+Vormetric Transparent Encryption for PCF includes the following key features:
 
-YOUR-PRODUCT-NAME includes the following key features:
-
-* Feature one
-* Feature two
-* Feature three
-
+* <b>Meet compliance and regulatory requirements for protecting sensitive data</b> – By encrypting and controlling access to data files used with PCF product instances
+* <b>Scalable and automated</b> – Automatically protect data as you add new PCF product instances
+* <b>High Performance</b> – The tile accelerates encryption operations using the hardware encryption capabilities of CPUs in the underlying Pivotal Cloud Foundry environment
+* <b>Multi-tenant</b> – Supports multi-tenancy with mappings between Pivotal Organization Space and Vormetric Data Security Domains
 
 
 ## <a id="snapshot"></a>Product Snapshot
 
-The following table provides version and version-support information about PRODUCT-NAME.
+The following table provides version and version-support information about the Vormetric Transparent Encryption for PCF.
 
 <table class="nice">
     <th>Element</th>
     <th>Details</th>
     <tr>
         <td>Tile version</td>
-        <td>vYOUR-VERSION-NUMBER</td>
+        <td>v0.1.0</td>
     </tr>
     <tr>
         <td>Release date</td>
-        <td>YOUR-RELEASE-DATE (Ex: July 1, 2017)</td>
+        <td>July 31st, 2018</td>
     </tr>
     <tr>
-        <td>Software component version</td>
-        <td>vYOUR-SOFTWARE-COMPONENT-VERSION-NUMBER</td>
+        <td>Vormetric Transparent Encryption version</td>
+        <td>v6.0.3.75</td>
     </tr>
+    <tr>
+        <td>Compatible kernel version (up to)</td>
+        <td>4.4.0-130-generic</td>
+    </tr>
+    <tr>
+        <td>Vormetric Data Security Manager version</td>
+        <td>v6.0.3+</td>
+    </tr>
+
+    <tr>
+        <td>Compatible Ubuntu Stemcell versions (up to)**</td>
+        <td>3541.36, 3468.54, 3445.54, 3421.69, 3568.26, or 3363.68</td>
+    </tr>
+    <tr>
+        <td>Compatible PCF MySQL version</td>
+        <td>v2.4.0+</td>
+     </tr>
     <tr>
         <td>Compatible Ops Manager version(s)</td>
-        <td>vYOUR-COMPATIBLE-OPS-MAN-VERSION (Ex. v1.11.x, v1.12.x, and v2.0.x)</td>
+        <td>v2.0.x, v2.1.x, and v2.2.x</td>
     </tr>
     <tr>
-        <td>Compatible Pivotal Application Service version(s)</td>
-        <td>vYOUR-COMPATIBLE-PIVOTAL-APPLICATION-SERVICE-VERSION (Ex. v1.11.x, v1.12.x, and v2.0.X)</td>
+        <td>Compatible Pivotal Application Service (formerly known as Elastic Runtime) version(s)</td>
+        <td>v2.0.x, v2.1.x, and v2.2.x</td>
     </tr>
     <tr>
         <td>IaaS support</td>
-        <td>AWS?, Azure?, GCP?, OpenStack?, and vSphere?</td>
+        <td>AWS, Azure, GCP, OpenStack, and vSphere</td>
     </tr>
     <tr>
         <td>IPsec support?</td>
-        <td>[Yes or No]</td>
+        <td>No</td>
     </tr>
 </table>
-* As of PCF v2.0, <em>Elastic Runtime</em> is renamed <em>Pivotal Application Service (PAS)</em>. 
+* As of PCF v2.0, <em>Elastic Runtime</em> is renamed <em>Pivotal Application Service (PAS)</em>.
+
+** Stemcells with versions above those listed may work if the underlying kernels are compatible with VTE.
 
 ## <a id="reqs"></a>Requirements
 
-**Provide any general or specific requirements, prerequisites, or dependencies here. 
-A general requirement might be something like, "An AppDynamics account." 
-A specific requirement might be something like, "Packaging Dependencies for Offline Buildpacks."**
+The Vormetric Transparent Encryption for PCF has the following requirements:
 
-YOUR-PRODUCT-NAME has the following requirements:
+* You must have Vormetric Data Security Manager running software version 6.0.3 or above.
+* You must have an active account with Thales e-Security for the support of Vormetric encryption product suite.
+* You must obtain a license for the Vormetric encryption product suite with the Live Data Transformation (LDT) feature.
+* You must use PCF version 2.0 or above.
+* You must install Offline Java Buildpack in PCF.
+* You must use PCF MySQL version 2.4.0 or above.
 
-+ PREREQUISITE-1
-
-+ PREREQUISITE-2
 
 ## <a id="limitations"></a>Limitations
-
-**List any known limitations.**
+* Manual configuration of domains and security policies, etc. in the Vormetric Data Security Manager is required before using the tile.
+* Shared secret for VTE registration must be the same for all host groups and domains in the Vormetric Data Security Manager.
+* Per-instance activation in one PCF environment is not supported.
+* The release was tested on Azure and Google Cloud Platform and is expected to work with other IaaS as well.
 
 ## <a id="feedback"></a>Feedback
-
 If you have a feature request, questions, or information about a bug, please email
-[Pivotal Cloud Foundry Feedback](mailto:cf-feedback@pivotal.io) list or send an email to YOUR-SUPPORT-EMAIL.
+[Pivotal Cloud Foundry Feedback](mailto:cf-feedback@pivotal.io) list.
+
+For Vormetric specific issues, questions or feedback, please contact the support using one of the following methods:
+
+* Visit [the Support website](https://help.thalesesecurity.com/hc/en-us)
+* Email [the Support](mailto:support@thalesesecurity.com)
+* Call 877-267-3247
+
+For Vormetric Sales:
+
+* Email [the Sales](sales@thalesesecurity.com)
+* Call 888-267-3732
 
 ## <a id='license'></a>License
-
-**List any license information here.**
+A license for the Vormetric encryption product suite with the Live Data Transformation (LDT) feature is required to use the tile.
