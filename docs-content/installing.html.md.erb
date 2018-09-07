@@ -17,7 +17,7 @@ The following steps are a high level workflow to enabling the VTE tile:
 
    * Map out a Pivotal organziation and space to a Vormetric domain. Prepare for the host group name, and the shared secret for the host group.
 
-   * Create the domain in the previous step.  Log in to the domain and create the host group and the shared secret in the previous step.  Configure a security policy for the domain, and host settings and guard path for the host group as described in *Configuring Vormetric DSM*.
+   * Create the domain in the previous step.  Login to the domain and create the host group and the shared secret in the previous step.  Configure a security policy for the domain, host settings, and guard path for the host group as described in *Configuring Vormetric DSM*.
 
    * Create the organization and space in the Apps Manager.  Create an application instance, for example, the On-demand MySQL, in the organization and space.
 
@@ -95,6 +95,7 @@ Follow the steps below to configure the DSM:
 
   * **Agent Key** — Create a versioned symmetric encryption key using a strong key algorithm, such as AES256.
   *	**Policy** — Create a security policy of the Live Data Transformation (LDT) type.  Refer to the matching version of the *Vormetric Transparent Encryption (VTE), Live Data Transformation Guide* for more information.
+
 
     A policy consists of two rules: the Security Rules and the Key Selection Rules.  A complete Security Rules must be configured as shown in Figure 3.  Configurations of all subcomponents in the Rules are illustrated in the subsequent figures.
 

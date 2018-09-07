@@ -1,29 +1,29 @@
 ---
-title: Vormetric Transparent Encryption for PCF
+title: Vormetric Transparent Encryption for PCF (Beta)
 owner: Partners
 ---
 
 <p class="note warning">
 <strong>WARNING! </strong>
-The Vormetric Transparent Encryption for PCF is currently in Beta and is intended for evaluation and test purposes only.
+The Vormetric Transparent Encryption for Pivotal Cloud Foundry (PCF) is currently in Beta and is intended for evaluation and test purposes only.
 Do not use this product in a PCF production environment.
 </p>
 
 
-This documentation describes the Vormetric Transparent Encryption (VTE) for Pivotal Cloud Foundry (PCF).  Vormetric
+This documentation describes the Vormetric Transparent Encryption (VTE) for PCF.  Vormetric
 Transparent Encryption for PCF works in conjunction with other on-demand PCF products by encrypting the data of the
-products with access control, allowing security administrators to manage and monitor the instances through the console of the Vormetric Data Security Manager (DSM).
+products with access control, allowing security administrators to manage, and monitor the instances through the console of the Vormetric Data Security Manager (DSM).
 
 
 ## <a id='overview'></a>Overview
 
-Vormetric Transparent Encryption (VTE) for PCF protects data stored within PCF products with file-level encryption and
+Vormetric Transparent Encryption for PCF protects data stored within PCF products with file-level encryption and
 access control, effectively limiting data file access to only allowed users, groups, and processes.  This combination enables
 organizations to meet compliance requirements and best practices for data security, including access control for
 administrators of the Pivotal environment.
 
-The solution is a BOSH addon and supports multi-tenancy.  A Registration Service maps tenant organizations and spaces as
-defined in Pivotal Apps Manager to domains within a Vormetric data security management environment.  Once registered,
+The solution is a BOSH Add-on and supports multi-tenancy.  A Registration Service maps tenant organizations and spaces as,
+defined in Pivotal Apps Manager, to domains within a Vormetric data security management environment.  Once registered,
 the Vormetric tile protects directories based on pre-configured encryption keys and policies.  Domains within this
 management environment can isolate management of data security policies and keys for specific PCF instances to specific
 organizations or business units.
