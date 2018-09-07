@@ -1,15 +1,184 @@
 ---
-title: Using YOUR-PRODUCT-NAME
+title: Using Vormetric Transparent Encryption for PCF (Beta)
 owner: Partners
 ---
 
-This topic describes how to use YOUR-PRODUCT-NAME.
 
-##<a id='using'></a> Using YOUR-PRODUCT-NAME
+This topic describes the use of the Vormetric Transparent Encryption (VTE) for Pivotal Cloud Foundry (PCF) tile after it has been successfully installed. This topic also provides an overview of the VTE tile and troubleshooting information to help address some of the issues that may arise during or after the installation.
 
-**This topic should include any instructions for how to use the service or dashboard created by the tile. 
-Give procedures for how to perform the different functions offered by your product and provide screenshots where necessary.** 
+##<a id='usevtetile'></a>Use VTE for PCF
+The VTE for PCF works transparently after the successful installation and configuration of all the required components (VTE, MySQL, and Data Security Manager (DSM)).  Thereafter, the VTE tile protects the data stored within the PCF product with file-level encryption and access control.
+##<a id='overview'></a>Overview
+The VTE addon is a BOSH runtime configuration used to protect on-demand products deployed in the PCF platform.  The VTE addon is packaged as a tile with the following two components:
 
-**You can also use this section to include information about Architecture and Troubleshooting for known errors. 
-If you include a Troubleshooting section, follow the Symptom/Explanation format used in the 
-[Okta Troubleshooting](http://docs.pivotal.io/p-identity/okta/troubleshooting.html) topic**.
+* VTE BOSH: a package of VTE binaries and scripts for life-cycle management
+* Registration Service: a web application responsible for generating registration data based on a mapping between a PCF organization and space to a Vormetric DSM domain
+
+The VTE BOSH release collocates with each VM instance of the product it protects.  The Registration Service, which supports multi-tenancy, is an application deployed in a Diego Cell.  The following diagram depicts interactions among the components.
+
+**Figure 1-Interactions among the Components**![Overview of Components](images/overviewVTE.png)
+
+###<a id='startupprocess'></a>VTE Startup Process
+After the VTE binary is installed in the designated directory of ```/var/vcap/jobs/vte_agent```, the startup process goes as follows (refer to the previous diagram for a depiction of the numbered steps described in this section):
+
+1. VTE queries the Registration Service REST API for registration data based on the on-demand service instance identifier and the deployment application name.
+1. Registration Service queries the Cloud Controller REST API for the organization and space information based on the service instance identifier.
+1. Cloud Controller returns the organization and space information to the Registration Service.
+1. Registration Service generates the registration data based on the data returned from the Cloud Controller and the mapping rule configured in the tile and returns the data to the VTE.
+1. VTE backs up the default registration data and registers with the DSM.
+1. VTE and DSM exchange certificates and complete the registration.
+
+###<a id='startstopsequence'></a> Startup and Shutdown Sequence
+To ensure the data stored within the PCF product is protected from the beginning, the VTE must start _before_ the service instance of the deployment application starts and stop _after_ the instance stops.  The following diagrams illustrate the dependency between the VTE and the service instance it protects:
+
+**Figure 2-Startup Sequence**
+  ![Startup Sequence](images/VTEStartupSequence.PNG)
+  * MySQL instance
+
+**Figure 3-Shutdown Sequence**
+
+  ![Shutdown Sequence](images/VTEShutdownSequence.PNG)
+  * MySQL instance
+
+##<a id='registrationserviceapi'></a> Registration Service API
+###<a id='authentication'></a> Authentication
+The Registration Service supports Basic Authentication over TLS for API access.
+###<a id='endpoints'></a> Endpoints
+####<a id='registrationinfo'></a> Registration Information
+The endpoint returns the data required for the VTE to register with the DSM.
+
+```
+POST /v1/registrations/info
+Request payload:
+{
+  "instanceId" : <service_instance_uuid>,
+  "appName" : <deployment_app_name>
+}
+
+Response payload:
+{
+  "instanceId" : <uuid_string>,
+  "appName" : <deployment_app_name>,
+  "serverHost" : <dsm_host_name>,
+  "domain" : <dsm_domain_name>,
+  "hostGroup" : <dsm_host_group>,
+  "secret" : <registration_secret>,
+  "hostDescription" : <dsm_host_description>,
+  "orgName" : <pivotal_organization_name>,
+  "spaceName" : <pivotal_space_name>
+}
+```
+####<a id='examplecurlscriptreg'></a> Example Curl Script
+```
+curl -u 1f6261c0a2f91e39:hb2iua6dyf6mmNvocuiOvS_J-0by2XW1 \
+     -k https://vor-reg-svc.cfapps.pie-21.cfplatformeng.com/v1/registrations/info \
+     -X POST \
+     -d '{"instanceId" : "c039070f-e8c4-4d85-98a1-1555ca59325e", "appName" : "mysql"}' \
+     -H "Content-Type: application/json"
+
+{
+  "instanceId":"9a149c0c-e992-4010-af97-603c4840c111",
+  "appName":"mysql",
+  "serverHost":"jblas-dsm.westus.cloudapp.azure.com",
+  "domain":"pivotal",
+  "hostGroup":"PCF_MYSQL",
+  "secret":"Admin12345#",
+  "hostDescription":"/Thales/dev/mysql224-small",
+  "orgName":"Thales",
+  "spaceName":"dev"
+}
+```
+####<a id='environmentvariables'></a> Environment Variables
+The endpoint returns a list of environment variables with the passwords redacted.
+
+```
+GET /envs
+
+```
+####<a id='examplecurlscriptgetenv'></a> Example Curl Script
+```
+curl -k https://vor-reg-svc.cfapps.pie-21.cfplatformeng.com/envs
+     -X GET
+     -H "Content-Type: application/json"
+
+----- ENV -----
+LOGIN_HOST = https://login.sys.pie-srt-26.cfplatformeng.com
+CC_HOST = https://api.sys.pie-srt-26.cfplatformeng.com
+UAA_HOST = https://uaa.sys.pie-srt-26.cfplatformeng.com
+CF_ADMIN_USERNAME = system_services
+CF_ADMIN_PASSWORD = <redacted>
+VCAP_APPLICATION = {"application_id":"1e983426-b75e-4491-a6ea-21eda2f1a104","application_name":"vormetric-registration-service-0.0.93","application_uris":["vor-reg-svc.cfapps.pie-srt-26.cfplatformeng.com"],"application_version":"2f7a8ab5-727f-4db8-bd52-164d7d99a54f","cf_api":"https://api.sys.pie-srt-26.cfplatformeng.com","host":"0.0.0.0","instance_id":"2cd1a409-7f3c-42bd-5f98-da5c","instance_index":0,"limits":{"disk":1024,"fds":16384,"mem":1024},"name":"vormetric-registration-service-0.0.93","port":8080,"space_id":"3a1d9986-c44e-4b74-b39f-86ba77318834","space_name":"vte-addon-space","uris":["vor-reg-svc.cfapps.pie-srt-26.cfplatformeng.com"],"version":"2f7a8ab5-727f-4db8-bd52-164d7d99a54f"}
+REG_DSM_SERVER_HOST = jblas-dsm.westus.cloudapp.azure.com
+REG_DSM_ADMIN_USERNAME =
+REG_DSM_ADMIN_PASSWORD = <redacted>
+REG_SHARED_SECRET = <redacted>
+REG_DOMAIN_MAPPING = {"value":"fixed","selected_option":{"reg_fixed_domain":"pivotal"}}
+SECURITY_USER_NAME = cc17110846207e7e
+SECURITY_USER_PASSWORD = <redacted>
+===== ENV =====
+```
+###<a id='healthcheck'></a> Health Check
+####<a id='healthcheck'></a> Health Check
+The endpoint returns the version of the Cloud Controller API and the name of the registration service.
+
+```
+GET /health
+
+Response payload:
+{
+  "apiVersion" : <cloud_controller_api_version>,
+  "appName" : <application_name>
+}
+```
+####<a id='examplecurlscriptgethealth'></a> Example Curl Script
+```
+curl -k https://vor-reg-svc.cfapps.pie-21.cfplatformeng.com/health \
+     -X GET \
+     -H "Content-Type: application/json"
+
+{
+  "apiVersion" : "2.103.0",
+  "appName" : "vormetric-registration-service-0.0.93"
+}
+```
+##<a id='troubleshoot'></a>Troubleshooting
+Check the syslog files of the VTE tile and MySQL to learn more about the given issue or failure.  The syslog files are located at the /var/vcap/sys/log/```<Bosh-job-name>```/ directory.  The Bosh job name can be “vte_agent” or the application name, for example, “mysql”.
+
+
+###<a id='failtoinstall'></a>VTE Agent Fails to Install
+####Symptom
+The pre-start log in the syslog directory indicates installation failure.
+####Explanation
+The most common reason for a VTE installation failure is due to an unsupported kernel.  Make sure that the VM kernel is supported by the VTE.
+Downgrading the Stemcell may be necessary to fix the issue.
+
+###<a id='failtoregister'></a>VTE Agent Fails to Register
+####Symptom
+The vmd process fails to start in `monit summary`.
+The pre-start log indicates registration failure.
+####Explanation
+The registration configuration contains invalid data.  Make sure that the data configured in the VTE tile match the data configured in the DSM.
+
+###<a id='accessdenied'></a>Access to Directory Denied
+####Symptom
+The pre-start log of the service instance indicates access to a directory is denied.
+The audit logs on the DSM console indicates a violation of the security policy.
+####Explanation
+The process set in the DSM security policy could be misconfigured.  Make sure the process violating the policy is whitelisted with the correct access.
+
+###<a id='failtoupgrade'></a>VTE Tile Upgrade Failure
+
+####Symptom
+The mysql processes fails to start in `monit summary`.  The pre-start error log indicates failure.  For example:
+```
+mysql/9cbec8b8-daff-48f2-bc6c-d49a4e28b060:/var/vcap/bosh_ssh/bosh_2dc0a7c2e4eb4ac# cat /var/vcap/sys/log/mysql/pre-start.stderr.log
+------------ STARTING mysql_ctl at Wed Jun 6 22:25:12 UTC 2018 -------------- mkdir: cannot create directory '/var/vcap/store/mysql/data': File exists
+```
+####Explanation
+
+It is a known issue that the VTE tile upgrade fails in some cases.  Make sure to uninstall the old VTE tile before installing the new tile.
+
+
+###<a id='generateagentlogs'></a>Generate agent logs
+
+If contacting Thales Support is necessary, use the `agentinfo` CLI to collect VTE agent logs.  Refer to the matching version of the *VTE Agent Installation and Configuration Guide* for more information about the CLI.
