@@ -3,48 +3,64 @@ title: Using Vormetric Transparent Encryption for PCF (Beta)
 owner: Partners
 ---
 
-
 This topic describes the use of the Vormetric Transparent Encryption (VTE) for Pivotal Cloud Foundry (PCF) tile after it has been successfully installed. This topic also provides an overview of the VTE tile and troubleshooting information to help address some of the issues that may arise during or after the installation.
 
-##<a id='usevtetile'></a>Use VTE for PCF
-The VTE for PCF works transparently after the successful installation and configuration of all the required components (VTE, MySQL, and Data Security Manager (DSM)).  Thereafter, the VTE tile protects the data stored within the PCF product with file-level encryption and access control.
-##<a id='overview'></a>Overview
-The VTE add-on is a BOSH runtime configuration used to protect on-demand products deployed in the PCF platform.  The VTE addon is packaged as a tile with the following two components:
+
+## <a id='usevtetile'></a> Use VTE for PCF
+
+The VTE for PCF works transparently after the successful installation and configuration of all the required components (VTE, MySQL, and Data Security Manager [DSM]). Thereafter, the VTE tile protects the data stored within the PCF product with file-level encryption and access control.
+
+
+## <a id='overview'></a> Overview
+
+The VTE add-on is a BOSH runtime configuration used to protect on-demand products deployed in the PCF platform. The VTE addon is packaged as a tile with the following two components:
 
 * VTE BOSH: a package of VTE binaries and scripts for life-cycle management
 * Registration Service: a web application responsible for generating registration data based on a mapping between a PCF organization and space to a Vormetric DSM domain
 
-The VTE BOSH release collocates with each VM instance of the product it protects.  The Registration Service, which supports multi-tenancy, is an application deployed in a Diego Cell.  The following diagram depicts interactions among the components.
+The VTE BOSH release collocates with each VM instance of the product it protects. The Registration Service, which supports multi-tenancy, is an application deployed in a Diego Cell. The following diagram depicts interactions among the components.
 
-**Figure 1-Interactions among the Components**![Overview of Components](images/overviewVTE.png)
+**Interactions among the Components**
+![Overview of Components](images/overviewVTE.png)
 
-###<a id='startupprocess'></a>VTE Startup Process
-After the VTE binary is installed in the designated directory of ```/var/vcap/jobs/vte_agent```, the startup process goes as follows (refer to the previous diagram for a depiction of the numbered steps described in this section):
+### <a id='startupprocess'></a> VTE Startup Process
+After the VTE binary is installed in the designated directory of `/var/vcap/jobs/vte_agent`, the startup process goes as follows (see the previous diagram for a depiction of the numbered steps described in this section):
 
 1. VTE queries the Registration Service REST API for registration data based on the on-demand service instance identifier and the deployment application name.
+
 1. Registration Service queries the Cloud Controller REST API for the organization and space information based on the service instance identifier.
+
 1. Cloud Controller returns the organization and space information to the Registration Service.
+
 1. Registration Service generates the registration data based on the data returned from the Cloud Controller and the mapping rule configured in the tile and returns the data to the VTE.
+
 1. VTE backs up the default registration data and registers with the DSM.
+
 1. VTE and DSM exchange certificates and complete the registration.
 
-###<a id='startstopsequence'></a> Startup and Shutdown Sequence
-To ensure the data stored within the PCF product is protected from the beginning, the VTE must start _before_ the service instance of the deployment application starts and stop _after_ the instance stops.  The following diagrams illustrate the dependency between the VTE and the service instance it protects:
+### <a id='startstopsequence'></a> Startup and Shutdown Sequence
 
-**Figure 2-Startup Sequence**
+To ensure the data stored within the PCF product is protected from the beginning, the VTE must start _before_ the service instance of the deployment application starts and stop _after_ the instance stops. The following diagrams illustrate the dependency between the VTE and the service instance it protects:
+
+**Startup Sequence**
   ![Startup Sequence](images/VTEStartupSequence.PNG)
   * MySQL instance
 
-**Figure 3-Shutdown Sequence**
-
+**Shutdown Sequence**
   ![Shutdown Sequence](images/VTEShutdownSequence.PNG)
   * MySQL instance
 
-##<a id='registrationserviceapi'></a> Registration Service API
-###<a id='authentication'></a> Authentication
+
+## <a id='registrationserviceapi'></a> Registration Service API
+
+### <a id='authentication'></a> Authentication
+
 The Registration Service supports Basic Authentication over TLS for API access.
-###<a id='endpoints'></a> Endpoints
-####<a id='registrationinfo'></a> Registration Information
+
+### <a id='endpoints'></a> Endpoints
+
+#### <a id='registrationinfo'></a> Registration Information
+
 The endpoint returns the data required for the VTE to register with the DSM.
 
 ```
@@ -68,7 +84,9 @@ Response payload:
   "spaceName" : <pivotal_space_name>
 }
 ```
-####<a id='examplecurlscriptreg'></a> Example Curl Script
+
+#### <a id='examplecurlscriptreg'></a> Example Curl Script
+
 ```
 curl -u 1f6261c0a2f91e39:hb2iua6dyf6mmNvocuiOvS_J-0by2XW1 \
      -k https://vor-reg-svc.cfapps.pie-21.cfplatformeng.com/v1/registrations/info \
@@ -88,14 +106,18 @@ curl -u 1f6261c0a2f91e39:hb2iua6dyf6mmNvocuiOvS_J-0by2XW1 \
   "spaceName":"dev"
 }
 ```
-####<a id='environmentvariables'></a> Environment Variables
+
+#### <a id='environmentvariables'></a> Environment Variables
+
 The endpoint returns a list of environment variables with the passwords redacted.
 
 ```
 GET /envs
 
 ```
-####<a id='examplecurlscriptgetenv'></a> Example Curl Script
+
+#### <a id='examplecurlscriptgetenv'></a> Example Curl Script
+
 ```
 curl -k https://vor-reg-svc.cfapps.pie-21.cfplatformeng.com/envs
      -X GET
@@ -117,8 +139,11 @@ SECURITY_USER_NAME = cc17110846207e7e
 SECURITY_USER_PASSWORD = <redacted>
 ===== ENV =====
 ```
-###<a id='healthcheck'></a> Health Check
-####<a id='healthcheck'></a> Health Check
+
+### <a id='healthcheck'></a> Health Check
+
+#### <a id='healthcheck'></a> Health Check
+
 The endpoint returns the version of the Cloud Controller API and the name of the registration service.
 
 ```
@@ -130,7 +155,9 @@ Response payload:
   "appName" : <application_name>
 }
 ```
-####<a id='examplecurlscriptgethealth'></a> Example Curl Script
+
+#### <a id='examplecurlscriptgethealth'></a> Example Curl Script
+
 ```
 curl -k https://vor-reg-svc.cfapps.pie-21.cfplatformeng.com/health \
      -X GET \
@@ -141,44 +168,58 @@ curl -k https://vor-reg-svc.cfapps.pie-21.cfplatformeng.com/health \
   "appName" : "vormetric-registration-service-0.0.93"
 }
 ```
-##<a id='troubleshoot'></a>Troubleshooting
-Check the syslog files of the VTE tile and MySQL to learn more about the given issue or failure.  The syslog files are located at the /var/vcap/sys/log/```<Bosh-job-name>```/ directory.  The Bosh job name can be “vte_agent” or the application name, for example, “mysql”.
+    
 
+## <a id='troubleshoot'></a> Troubleshooting
 
-###<a id='failtoinstall'></a>VTE Agent Fails to Install
-####Symptom
+Check the syslog files of the VTE tile and MySQL to learn more about the given issue or failure. The syslog files are located at the /var/vcap/sys/log/`<Bosh-job-name>`/ directory. The BOSH job name can be `vte_agent` or the application name, such as `mysql`.
+
+### <a id='failtoinstall'></a> VTE Agent Fails to Install
+
+#### Symptom
 The pre-start log in the syslog directory indicates installation failure.
-####Explanation
-The most common reason for a VTE installation failure is due to an unsupported kernel.  Make sure that the VM kernel is supported by the VTE.
-Downgrading the Stemcell may be necessary to fix the issue.
 
-###<a id='failtoregister'></a>VTE Agent Fails to Register
-####Symptom
-The vmd process fails to start in `monit summary`.
-The pre-start log indicates registration failure.
-####Explanation
-The registration configuration contains invalid data.  Make sure that the data configured in the VTE tile match the data configured in the DSM.
+#### Explanation
 
-###<a id='accessdenied'></a>Access to Directory Denied
-####Symptom
-The pre-start log of the service instance indicates access to a directory is denied.
-The audit logs on the DSM console indicates a violation of the security policy.
-####Explanation
-The process set in the DSM security policy could be misconfigured.  Make sure the process violating the policy is whitelisted with the correct access.
+The most common reason for a VTE installation failure is due to an unsupported kernel. Make sure that the VM kernel is supported by the VTE.
 
-###<a id='failtoupgrade'></a>VTE Tile Upgrade Failure
+Downgrading the stemcell may be necessary to fix the issue.
 
-####Symptom
-The mysql processes fails to start in `monit summary`.  The pre-start error log indicates failure.  For example:
+### <a id='failtoregister'></a> VTE Agent Fails to Register
+
+#### Symptom
+
+The vmd process fails to start in `monit summary`. The pre-start log indicates registration failure.
+
+#### Explanation
+
+The registration configuration contains invalid data. Make sure that the data configured in the VTE tile match the data configured in the DSM.
+
+### <a id='accessdenied'></a> Access to Directory Denied
+
+#### Symptom
+
+The pre-start log of the service instance indicates access to a directory is denied. The audit logs on the DSM console indicates a violation of the security policy.
+
+#### Explanation
+
+The process set in the DSM security policy could be misconfigured. Make sure the process violating the policy is whitelisted with the correct access.
+
+### <a id='failtoupgrade'></a> VTE Tile Upgrade Failure
+
+#### Symptom
+
+The mysql processes fails to start in `monit summary`. The pre-start error log indicates failure. For example:
+
 ```
 mysql/9cbec8b8-daff-48f2-bc6c-d49a4e28b060:/var/vcap/bosh_ssh/bosh_2dc0a7c2e4eb4ac# cat /var/vcap/sys/log/mysql/pre-start.stderr.log
 ------------ STARTING mysql_ctl at Wed Jun 6 22:25:12 UTC 2018 -------------- mkdir: cannot create directory '/var/vcap/store/mysql/data': File exists
 ```
-####Explanation
 
-It is a known issue that the VTE tile upgrade fails in some cases.  Make sure to uninstall the old VTE tile before installing the new tile.
+#### Explanation
 
+It is a known issue that the VTE tile upgrade fails in some cases. Make sure to uninstall the old VTE tile before installing the new tile.
 
-###<a id='generateagentlogs'></a>Generate agent logs
+### <a id='generateagentlogs'></a> Generate Agent Logs
 
-If contacting Thales Support is necessary, use the `agentinfo` CLI to collect VTE agent logs.  Refer to the matching version of the *VTE Agent Installation and Configuration Guide* for more information about the CLI.
+If contacting Thales Support is necessary, use the `agentinfo` CLI to collect VTE agent logs. See the matching version of the *VTE Agent Installation and Configuration Guide* for more information about the CLI.
