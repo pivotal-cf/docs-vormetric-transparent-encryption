@@ -3,18 +3,17 @@ title: Release Notes for Vormetric Transparent Encryption for PCF
 owner: Partners
 ---
 
-
-##<a id="ver"></a> v0.1.0 (Beta)
+## <a id="ver"></a> v0.1.0 (Beta)
 
 **Release Date:** September 7, 2018
 
 Features included in this Beta release:
 
-* Protects data of PCF MySQL v2.4.0 or above.
+* Protects data of PCF MySQL v2.4.0 or later.
 
 Known issues in this release:
 
-* MySQL smoke test creates MySQL instances in the pivotal-services space of the system Organization. The smoke tests might
-fail if Organization, or Organization Space is selected for DSM Domain Mapping, and the domain is not provisioned accordingly.
+* MySQL smoke test creates MySQL instances in the `pivotal-services` space of the system Organization. The smoke tests might
+fail if Organization or Organization Space is selected for DSM Domain Mapping, and the domain is not provisioned accordingly.
 
-* Upgrades of MySQL and Stemcells may fail for some instances.
+* Upgrades of MySQL and stemcells may fail for some instances.
