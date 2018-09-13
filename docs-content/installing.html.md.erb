@@ -16,10 +16,10 @@ The following steps are a high-level workflow to enabling the VTE tile:
 1. Configure the VTE tile so that it conforms to the mapping strategy in the previous step.
 
 1. For each tenant:
-   * Map out a Pivotal organziation and space to a Vormetric domain. Prepare for the host group name and the shared secret for the host group.
+   * Map out a Pivotal organization and space to a Vormetric domain. Prepare for the host group name and the shared secret for the host group.
    * Create the domain in the previous step. Log in to the domain and create the host group and the shared secret in the previous step. Configure a security policy for the domain, host settings, and guard path for the host group as described in *Configuring Vormetric DSM*.
    * Create the organization and space in Apps Manager. Create an application instance, such as the On-demand MySQL, in the organization and space.
-   * Upon completion of the previous step, the VTE instance protecting the application instance should be registered with the DSM with a successful guard satus.
+   * Upon completion of the previous step, the VTE instance protecting the application instance should be registered with the DSM with a successful guard status.
 
 
 ## <a id='installandconfigvte'></a> Install and Configure the VTE Tile
@@ -98,7 +98,7 @@ Host descriptions are automatically generated in the format of `\<organization>\
 
 
 ## <a id='configdsm'></a> Configuring Vormetric DSM
-    
+
 This section summarizes the necessary configuration in DSM to work with the VTE tile. Each step includes the recommended DSM administrator role for performing the task. See the matching version of the *DSM Administrator Guide* for
 descriptions of each configuration, information about the administrator roles and responsibilities, and the separation of administrative duties.
 
@@ -145,17 +145,18 @@ The Key Selection Rules for an LDT policy must use a symmetric versioned key for
 *	**Host Group** — Create a host group following the naming convention described in the [Mapping PCF Organizations and Spaces to Vormetric Domains](#mapping) section. Make sure the **Enable FS Agent Communication** option for the host group is selected.
 
 * **Host Settings** — Configure the host settings for the host group with the following rules:
+
     ```
-     |authenticator|/usr/sbin/sshd
-     |authenticator|/bin/login
-     |authenticator|/var/vcap/bosh/bin/bosh-agent
-     |authenticator|/var/vcap/bosh/bin/monit
-     |su_root_no_auth|/usr/bin/sudo
-     |trust+arg=-p /var/vcap/store/mysql/|/bin/mkdir
-     |trust+arg=/var/vcap/store/mysql/data|/bin/mkdir
-     |trust+arg=vcap:vcap /var/vcap/store/mysql|/bin/chown
-     |trust+arg=vcap:vcap /var/vcap/store/mysql/data|/bin/chown
-     |authenticator_euid|/var/vcap/packages/percona-server/bin/mysqld
+|authenticator|/usr/sbin/sshd
+|authenticator|/bin/login
+|authenticator|/var/vcap/bosh/bin/bosh-agent
+|authenticator|/var/vcap/bosh/bin/monit
+|su_root_no_auth|/usr/bin/sudo
+|trust+arg=-p /var/vcap/store/mysql/|/bin/mkdir
+|trust+arg=/var/vcap/store/mysql/data|/bin/mkdir
+|trust+arg=vcap:vcap /var/vcap/store/mysql|/bin/chown
+|trust+arg=vcap:vcap /var/vcap/store/mysql/data|/bin/chown
+|authenticator_euid|/var/vcap/packages/percona-server/bin/mysqld
     ```
 
 **Host Settings for the Host Group**
