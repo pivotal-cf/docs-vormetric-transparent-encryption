@@ -75,13 +75,13 @@ The following table explains the mapping options to support multi-tenancy. Follo
           <td>Organization</td>
           <td>`PCF.<organization>`</td>
           <td>The sanitized organization name\* prefixed with `PCF.`.</td>
-          <td>`Thales` => `PCF.Thales`</td>
+          <td>`Thales` &rarr; `PCF.Thales`</td>
       </tr>
       <tr>
         <td>Organization Space</td>
         <td>`PCF.<organization>.<space>`</td>
         <td>The sanitized space name\* is limited to 20 characters. The sanitized organization name\* is limited to 60 characters.</td>
-        <td>`Thales` `Dev` => `PCF.Thales.Dev`</td>
+        <td>`Thales` `Dev` &rarr; `PCF.Thales.Dev`</td>
       </tr>
       <tr>
           <td>Single Fixed Domain</td>
@@ -93,8 +93,8 @@ The following table explains the mapping options to support multi-tenancy. Follo
   \*The domain name is limited to 64 characters.  The name must consist of alphanumeric characters and must start with an alpha character.  The only non\-alphanumeric characters allowed are the dot
   \( \. \), the underscore \( \_ \), and the dash \( \- \)\.
 
-The naming convention for host group is `PCF_<UPPER-CASE-OF-DEPLOYMENT-APP-NAME>`. For example, For example, `MySQL` => `PCF_MYSQL`.
-Host descriptions are automatically generated in the format of `\<organization>\<space>\<service_instance_name>`.
+The naming convention for host group is `PCF_<UPPER-CASE-OF-DEPLOYMENT-APP-NAME>`. For example, For example, `MySQL` &rarr; `PCF_MYSQL`.
+Host descriptions are automatically generated in the format of `/<organization>/<space>/<service_instance_name>`.
 
 
 ## <a id='configdsm'></a> Configuring Vormetric DSM
@@ -136,7 +136,7 @@ A policy consists of two rules: the Security Rules and the Key Selection Rules. 
 
 The Key Selection Rules for an LDT policy must use a symmetric versioned key for the Transformation Key. Create a key rule using the symmetric key created at the beginning of this step.
 
-**Key Selection Rules**
+**Key Selection Rules of an LDT Security Policy**
 ![usersetconfigs](images/keyselectionrules.PNG)
 
 **Detailed view of the Key Selection Rules**
