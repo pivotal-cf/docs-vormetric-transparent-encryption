@@ -168,11 +168,13 @@ curl -k https://vor-reg-svc.cfapps.pie-21.cfplatformeng.com/health \
   "appName" : "vormetric-registration-service-0.0.93"
 }
 ```
-    
+
 
 ## <a id='troubleshoot'></a> Troubleshooting
 
-Check the syslog files of the VTE tile and MySQL to learn more about the given issue or failure. The syslog files are located at the /var/vcap/sys/log/`<Bosh-job-name>`/ directory. The BOSH job name can be `vte_agent` or the application name, such as `mysql`.
+The following tips are for troubleshooting configuration and installation issues. All log files are located in the `/var/vcap/sys/log/` directory.
+
+To debug VTE specific issues, use the command line utilities bundled with the VTE agent. Refer to the matching version of the *VTE Agent Installation and Configuration Guide* for more information.
 
 ### <a id='failtoinstall'></a> VTE Agent Fails to Install
 
@@ -220,6 +222,6 @@ mysql/9cbec8b8-daff-48f2-bc6c-d49a4e28b060:/var/vcap/bosh_ssh/bosh_2dc0a7c2e4eb4
 
 It is a known issue that the VTE tile upgrade fails in some cases. Make sure to uninstall the old VTE tile before installing the new tile.
 
-### <a id='generateagentlogs'></a> Generate Agent Logs
+### <a id='generatevtelogs'></a> Generate VTE Agent Logs
 
-If contacting Thales Support is necessary, use the `agentinfo` CLI to collect VTE agent logs. See the matching version of the *VTE Agent Installation and Configuration Guide* for more information about the CLI.
+If contacting Thales Support is necessary, run `/opt/vormetric/DataSecurityExpert/agent/vmd/bin/agentinfo` to collect VTE agent logs. A tarball of all agent information will be generated in the current directory.
