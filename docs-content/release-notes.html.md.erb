@@ -3,11 +3,26 @@ title: Release Notes for Vormetric Transparent Encryption for PCF
 owner: Partners
 ---
 
+## <a id="ver"></a> v0.1.1 (Beta)
+
+**Release Date:** October 25, 2018
+
+Feature included in this release:
+
+* Kernel refresh to support Ubuntu Xenial Stemcells.
+
+Known issues in this release:
+
+* MySQL smoke test creates MySQL instances in the `pivotal-services` space of the system Organization. The smoke tests might
+fail if Organization or Organization Space is selected for DSM Domain Mapping, and the domain is not provisioned accordingly.
+
+* Upgrades of MySQL and stemcells may fail for some instances.
+
 ## <a id="ver"></a> v0.1.0 (Beta)
 
 **Release Date:** September 14, 2018
 
-Features included in this Beta release:
+Features included in this release:
 
 * Protects data of MySQL for PCF v2.4.0 and later on Ubuntu Trusty Stemcells upto 3541.36, 3468.54, 3445.54, 3421.69, 3568.26, or 3363.68.
 
@@ -18,12 +33,3 @@ fail if Organization or Organization Space is selected for DSM Domain Mapping, a
 
 * Upgrades of MySQL and stemcells may fail for some instances.
 
-## <a id="ver"></a> v0.1.1 (Beta)
-
-**Release Date:** October 25, 2018
-
-Features included in this Beta release:
-
-* Kernel refresh to support Ubuntu Xenial Stemcells.
-
-Known issues in this release are the same as previous release.
