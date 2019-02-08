@@ -3,33 +3,125 @@ title: Release Notes for Vormetric Transparent Encryption for PCF
 owner: Partners
 ---
 
+## <a id="ver"></a> v0.1.3 (Beta)
+
+**Release Date:** February 11, 2019
+
+<table class="nice">
+    <th>Element</th>
+    <th>Details</th>
+    <tr>
+        <td>Tile version</td>
+        <td>v0.1.3</td>
+    </tr>
+    <tr>
+        <td>Vormetric Transparent Encryption version</td>
+        <td>v6.1.2.21</td>
+    </tr>
+    <tr>
+        <td>Vormetric Data Security Manager version</td>
+        <td>v6.0.3+</td>
+    </tr>
+    <tr>
+        <td>Compatible Unbuntu Xenial kernel versions (up to)</td>
+        <td>4.15.0-43-generic</td>
+    </tr>
+    <tr>
+        <td>Compatible Ubuntu Xenial Stemcell versions (up to)**</td>
+        <td>97.43</td>
+    </tr>
+    <tr>
+        <td>Compatible MySQL for PCF version</td>
+        <td>v2.4.0+</td>
+     </tr>
+    <tr>
+        <td>Compatible Ops Manager version(s)</td>
+        <td>v2.2.x, v2.3.x, v2.4.x</td>
+    </tr>
+    <tr>
+        <td>Compatible Pivotal Application Service version(s)</td>
+        <td>v2.2.x, v2.3.x, v2.4.x</td>
+    </tr>
+    <tr>
+        <td>IaaS support</td>
+        <td>AWS, Azure, GCP, OpenStack, and vSphere</td>
+    </tr>
+    <tr>
+        <td>IPsec support?</td>
+        <td>No</td>
+    </tr>
+</table>
+** Stemcells with versions above those listed may work if the underlying kernels are compatible with VTE.
+
+Feature included in this release:
+
+* Kernel refresh to support Ubuntu Xenial Stemcell upto v97.43.
+
+Known issues in this release:
+
+* MySQL smoke test creates MySQL instances in the `pivotal-services` space of the system Organization. The smoke tests might
+fail if Organization or Organization Space is selected for DSM Domain Mapping and the domain is not provisioned accordingly.
+
+* Upgrades of stemcells may fail.
+* Upgrades of MySQL v2.4.0 to v2.4.1 hung.
+
+
 ## <a id="ver"></a> v0.1.1 (Beta)
 
 **Release Date:** October 25, 2018
 
+<table class="nice">
+    <th>Element</th>
+    <th>Details</th>
+    <tr>
+        <td>Tile version</td>
+        <td>v0.1.1</td>
+    </tr>
+    <tr>
+        <td>Vormetric Transparent Encryption version</td>
+        <td>v6.1.1.5</td>
+    </tr>
+    <tr>
+        <td>Vormetric Data Security Manager version</td>
+        <td>v6.0.3+</td>
+    </tr>
+    <tr>
+        <td>Compatible Ubuntu Xenial kernel version (up to)</td>
+        <td>4.15.0-34-generic</td>
+    </tr>
+    <tr>
+        <td>Compatible Ubuntu Xenial Stemcell versions (up to)**</td>
+        <td>97.18</td>
+    </tr>
+    <tr>
+        <td>Compatible MySQL for PCF version</td>
+        <td>v2.4.0+</td>
+     </tr>
+    <tr>
+        <td>Compatible Ops Manager version(s)</td>
+        <td>v2.1.x, v2.2.x, and v2.3.x</td>
+    </tr>
+    <tr>
+        <td>Compatible Pivotal Application Service version(s)</td>
+        <td>v2.1.x, v2.2.x, and v2.3.x</td>
+    </tr>
+    <tr>
+        <td>IaaS support</td>
+        <td>AWS, Azure, GCP, OpenStack, and vSphere</td>
+    </tr>
+    <tr>
+        <td>IPsec support?</td>
+        <td>No</td>
+    </tr>
+</table>
+
 Feature included in this release:
 
-* Kernel refresh to support Ubuntu Xenial Stemcells.
+* Kernel refresh to support Ubuntu Xenial Stemcells upto v97.18.
 
 Known issues in this release:
 
 * MySQL smoke test creates MySQL instances in the `pivotal-services` space of the system Organization. The smoke tests might
-fail if Organization or Organization Space is selected for DSM Domain Mapping, and the domain is not provisioned accordingly.
+fail if Organization or Organization Space is selected for DSM Domain Mapping and the domain is not provisioned accordingly.
 
 * Upgrades of MySQL and stemcells may fail for some instances.
-
-## <a id="ver"></a> v0.1.0 (Beta)
-
-**Release Date:** September 14, 2018
-
-Features included in this release:
-
-* Protects data of MySQL for PCF v2.4.0 and later on Ubuntu Trusty Stemcells upto 3541.36, 3468.54, 3445.54, 3421.69, 3568.26, or 3363.68.
-
-Known issues in this release:
-
-* MySQL smoke test creates MySQL instances in the `pivotal-services` space of the system Organization. The smoke tests might
-fail if Organization or Organization Space is selected for DSM Domain Mapping, and the domain is not provisioned accordingly.
-
-* Upgrades of MySQL and stemcells may fail for some instances.
-

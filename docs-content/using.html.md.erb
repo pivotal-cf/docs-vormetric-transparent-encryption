@@ -225,3 +225,14 @@ It is a known issue that the VTE tile upgrade fails in some cases. Make sure to 
 ### <a id='generatevtelogs'></a> Generate VTE Agent Logs
 
 If contacting Thales Support is necessary, run `/opt/vormetric/DataSecurityExpert/agent/vmd/bin/agentinfo` to collect VTE agent logs. A tarball of all agent information will be generated in the current directory.
+
+
+### <a id='failtoupgrade'></a> Connection to Registration Service Timed Out
+
+#### Symptom
+
+The pre-start.stderr.log shows curl command to Registration Service timed out.
+
+#### Explanation
+
+Components in PCF are not able to communicate with each other.  Consult with your PCF Operators to correct the setup. 
