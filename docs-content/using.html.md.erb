@@ -231,8 +231,13 @@ If contacting Thales Support is necessary, run `/opt/vormetric/DataSecurityExper
 
 #### Symptom
 
-The pre-start.stderr.log shows curl command to Registration Service timed out.
+The `pre-start.stderr.log` shows that the curl command to the Registration Service timed out.
 
 #### Explanation
 
+<<<<<<< HEAD
 MySQL tile is not configured to allow outbound internet access from service instances.  Enable Assign Public IP Addresses for all Service VMs in MySQL Settings.
+=======
+Components in PCF cannot communicate with each other.  
+Consult with your operators to correct the setup.
+>>>>>>> upstream/master
