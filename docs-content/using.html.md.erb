@@ -235,4 +235,6 @@ The `pre-start.stderr.log` shows that the curl command to the Registration Servi
 
 #### Explanation
 
-MySQL tile is not configured to allow outbound internet access from service instances.  Enable Assign Public IP Addresses for all Service VMs in MySQL Settings.
+The MySQL for PCF tile is not configured to allow outbound internet access from service instances.
+In the **Global Settings** pane of MySQL for PCF, enable **Assign Public IP Addresses for all Service VMs**.
+For information, see [Configure Global Settings](https://docs.pivotal.io/p-mysql/install-config.html#global).
