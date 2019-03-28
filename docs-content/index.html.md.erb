@@ -3,30 +3,30 @@ title: Vormetric Transparent Encryption for PCF (Beta)
 owner: Partners
 ---
 
-<p class="note warning"><strong>WARNING:</strong> The Vormetric Transparent Encryption for Pivotal Cloud Foundry (PCF) 
-    is currently in Beta and is intended for evaluation and test purposes only. Do not use this product in a PCF 
+<p class="note warning"><strong>WARNING:</strong> The Vormetric Transparent Encryption for Pivotal Cloud Foundry (PCF)
+    is currently in Beta and is intended for evaluation and test purposes only. Do not use this product in a PCF
     production environment.</p>
 
-This documentation describes the Vormetric Transparent Encryption (VTE) for PCF. Vormetric Transparent Encryption for 
-PCF works in conjunction with other on-demand PCF products by encrypting the data of the products with access control, 
-allowing security administrators to manage and monitor the instances through the console of the Vormetric Data Security 
+This documentation describes the Vormetric Transparent Encryption (VTE) for PCF. Vormetric Transparent Encryption for
+PCF works in conjunction with other on-demand PCF products by encrypting the data of the products with access control,
+allowing security administrators to manage and monitor the instances through the console of the Vormetric Data Security
 Manager (DSM).
 
 ## <a id='overview'></a> Overview
 
-Vormetric Transparent Encryption for PCF protects data stored within PCF products with file-level encryption and access 
-control, effectively limiting data file access to only allowed users, groups, and processes. 
-This combination enables organizations to meet compliance requirements and best practices for data security, 
+Vormetric Transparent Encryption for PCF protects data stored within PCF products with file-level encryption and access
+control, effectively limiting data file access to only allowed users, groups, and processes.
+This combination enables organizations to meet compliance requirements and best practices for data security,
 including access control for administrators of the Pivotal environment.
 
-The solution is a BOSH Add-on and supports multi-tenancy. A Registration Service maps tenant organizations 
-and spaces as defined in Pivotal Apps Manager to domains within a Vormetric data security management environment. 
-After you are registered, the Vormetric tile protects directories based on pre-configured encryption keys and policies. 
-Domains within this management environment can isolate management of data security policies and keys for 
+The solution is a BOSH Add-on and supports multi-tenancy. A Registration Service maps tenant organizations
+and spaces as defined in Pivotal Apps Manager to domains within a Vormetric data security management environment.
+After you are registered, the Vormetric tile protects directories based on pre-configured encryption keys and policies.
+Domains within this management environment can isolate management of data security policies and keys for
 specific PCF instances to specific organizations or business units.
 
-A Vormetric Data Security Manager is required to use the VTE tile, and you must have a base VTE and 
-a Live Data Transformation (LDT) license to activate. 
+A Vormetric Data Security Manager is required to use the VTE tile, and you must have a base VTE and
+a Live Data Transformation (LDT) license to activate.
 Contact your Thales e-Security account manager or sales@thalesesec.com to obtain these licenses.
 
 The Vormetric Transparent Encryption for PCF currently supports the following PCF products:
@@ -37,12 +37,12 @@ The Vormetric Transparent Encryption for PCF currently supports the following PC
 
 Vormetric Transparent Encryption for PCF includes the following key features:
 
-* **Meet compliance and regulatory requirements for protecting sensitive data** – encrypt and control access 
+* **Meet compliance and regulatory requirements for protecting sensitive data** – encrypt and control access
 to data files used with PCF product instances
 * **Scalable and automated** – automatically protect data as you add new PCF product instances
-* **High Performance** – the tile accelerates encryption operations using the hardware encryption 
+* **High Performance** – the tile accelerates encryption operations using the hardware encryption
 capabilities of CPUs in the underlying Pivotal Cloud Foundry environment
-* **Multi-tenant** – supports multi-tenancy with mappings between Pivotal Organization Space and 
+* **Multi-tenant** – supports multi-tenancy with mappings between Pivotal Organization Space and
 Vormetric Data Security Domains
 
 
@@ -55,15 +55,15 @@ The following table provides version and version-support information about the V
     <th>Details</th>
     <tr>
         <td>Tile version</td>
-        <td>v0.1.4</td>
+        <td>v0.1.5</td>
     </tr>
     <tr>
         <td>Release date</td>
-        <td>February 27, 2019</td>
+        <td>April 2, 2019</td>
     </tr>
     <tr>
         <td>Vormetric Transparent Encryption version</td>
-        <td>v6.1.2.23</td>
+        <td>v6.1.3-28</td>
     </tr>
     <tr>
         <td>Vormetric Data Security Manager version</td>
@@ -71,14 +71,14 @@ The following table provides version and version-support information about the V
     </tr>
     <tr>
         <td>Compatible Ubuntu Xenial kernel versions (up to)</td>
-        <td>4.15.0-45-generic</td>
+        <td>4.15.0-46-generic</td>
     </tr>
     <tr>
         <td>Compatible Ubuntu Xenial Stemcell versions (up to)**</td>
-        <td>97.57, 170.30</td>
+        <td>97.71, 170.45</td>
     </tr>
     <tr>
-        <td>Compatible MySQL for PCF version</td>
+        <td>Compatible MySQL for PCF version(s)</td>
         <td>v2.4.x, v2.5.x</td>
      </tr>
     <tr>
@@ -120,9 +120,9 @@ The Vormetric Transparent Encryption for PCF has the following requirements:
 
 ## <a id="limitations"></a> Limitations
 
-* Manual configuration of domains and security policies, etc. in the Vormetric Data Security Manager is 
+* Manual configuration of domains and security policies, etc. in the Vormetric Data Security Manager is
 required before using the tile.
-* Shared secret for VTE registration must be the same for all host groups and domains in the Vormetric 
+* Shared secret for VTE registration must be the same for all host groups and domains in the Vormetric
 Data Security Manager.
 * Per-instance activation in one PCF environment is not supported.
 * The release was tested on Azure and Google Cloud Platform and is expected to work with other IaaSes as well.
@@ -130,7 +130,7 @@ Data Security Manager.
 
 ## <a id="feedback"></a> Feedback
 
-If you have a feature request, questions, or information about a bug, 
+If you have a feature request, questions, or information about a bug,
 email [Pivotal Cloud Foundry Feedback](mailto:cf-feedback@pivotal.io).
 
 For Vormetric-specific issues, questions, or feedback, contact Support using one of the following methods:
@@ -147,5 +147,5 @@ For Thales e-Security Sales:
 
 ## <a id='license'></a> License
 
-A license for the Vormetric encryption product suite with the Live Data Transformation 
+A license for the Vormetric encryption product suite with the Live Data Transformation
 (LDT) feature is required to use the tile.
