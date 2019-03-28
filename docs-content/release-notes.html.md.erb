@@ -55,20 +55,3 @@ Known issues in this release:
 
 * Upgrades of stemcells might fail.
 * Upgrades of MySQL for PCF `v2.4.0` to `v2.4.1` hang.
-
-
-## <a id="ver"></a> v0.1.1 (Beta)
-
-**Release Date:** October 25, 2018
-
-Feature included in this release:
-
-* Update VTE to `v6.1.1-5` to support Ubuntu Xenial stemcells up to `v97.18` or kernel version `4.15.0-34-generic`.
-
-Known issues in this release:
-
-* MySQL for PCF smoke tests create MySQL instances in the `pivotal-services` space of the system org.
-The smoke tests might fail if the org and space is selected for DSM Domain Mapping and the domain
-is not provisioned accordingly.
-
-* Upgrades of MySQL for PCF and stemcells might fail for some instances.
