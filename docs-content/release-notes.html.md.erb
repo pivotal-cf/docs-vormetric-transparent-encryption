@@ -3,6 +3,23 @@ title: Release Notes for Vormetric Transparent Encryption for PCF
 owner: Partners
 ---
 
+## <a id="ver"></a> v0.1.7
+
+**Release Date:** May 21, 2019
+
+Features included in this release:
+
+* Update VTE to `v6.1.3-46` to support Ubuntu Xenial stemcells up to `v97.82` and `v170.51` or kernel version `4.15.0-48-generic`.
+
+Known issues in this release:
+
+* The MySQL for PCF smoke test creates MySQL instances in the `pivotal-services` space of the system org.
+  The smoke tests might fail if the org or the org space are selected for DSM Domain Mapping
+  and the domain is not provisioned accordingly.
+
+* Upgrades of stemcells might fail.
+
+
 ## <a id="ver"></a> v0.1.6
 
 **Release Date:** April 19, 2019
