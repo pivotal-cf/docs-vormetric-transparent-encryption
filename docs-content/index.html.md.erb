@@ -1,16 +1,16 @@
 ---
-title: Vormetric Transparent Encryption for PCF
+title: Vormetric Transparent Encryption for Pivotal Platform
 owner: Partners
 ---
 
-This documentation describes the Vormetric Transparent Encryption (VTE) for PCF. Vormetric Transparent Encryption for
-PCF works in conjunction with other on-demand PCF products by encrypting the data of the products with access control,
+This documentation describes the Vormetric Transparent Encryption (VTE) for Pivotal Platform. Vormetric Transparent Encryption for
+Pivotal Platform works in conjunction with other on-demand Pivotal Platform products by encrypting the data of the products with access control,
 allowing security administrators to manage and monitor the instances through the console of the Vormetric Data Security
 Manager (DSM).
 
 ## <a id='overview'></a> Overview
 
-Vormetric Transparent Encryption for PCF protects data stored within PCF products with file-level encryption and access
+Vormetric Transparent Encryption for Pivotal Platform protects data stored within Pivotal Platform products with file-level encryption and access
 control, effectively limiting data file access to only allowed users, groups, and processes.
 This combination enables organizations to meet compliance requirements and best practices for data security,
 including access control for administrators of the Pivotal environment.
@@ -19,32 +19,32 @@ The solution is a BOSH Add-on and supports multi-tenancy. A Registration Service
 and spaces as defined in Pivotal Apps Manager to domains within a Vormetric data security management environment.
 After you are registered, the Vormetric tile protects directories based on pre-configured encryption keys and policies.
 Domains within this management environment can isolate management of data security policies and keys for
-specific PCF instances to specific organizations or business units.
+specific Pivotal Platform instances to specific organizations or business units.
 
 A Vormetric Data Security Manager is required to use the VTE tile, and you must have a base VTE and
 a Live Data Transformation (LDT) license to activate.
 Contact your Thales e-Security account manager or sales@thalesesec.com to obtain these licenses.
 
-The Vormetric Transparent Encryption for PCF currently supports the following PCF products:
+The Vormetric Transparent Encryption for Pivotal Platform currently supports the following Pivotal Platform products:
 
-* MySQL for PCF v2.4.0 and later
+* MySQL for Pivotal Platform v2.4.0 and later
 
 ## <a id='features'></a> Key Features
 
-Vormetric Transparent Encryption for PCF includes the following key features:
+Vormetric Transparent Encryption for Pivotal Platform includes the following key features:
 
 * **Meet compliance and regulatory requirements for protecting sensitive data** – encrypt and control access
-to data files used with PCF product instances
-* **Scalable and automated** – automatically protect data as you add new PCF product instances
+to data files used with Pivotal Platform product instances
+* **Scalable and automated** – automatically protect data as you add new Pivotal Platform product instances
 * **High Performance** – the tile accelerates encryption operations using the hardware encryption
-capabilities of CPUs in the underlying Pivotal Cloud Foundry environment
+capabilities of CPUs in the underlying Pivotal Platform environment
 * **Multi-tenant** – supports multi-tenancy with mappings between Pivotal Organization Space and
 Vormetric Data Security Domains
 
 
 ## <a id="snapshot"></a> Product Snapshot
 
-The following table provides version and version-support information about the Vormetric Transparent Encryption for PCF.
+The following table provides version and version-support information about the Vormetric Transparent Encryption for Pivotal Platform.
 
 <table class="nice">
     <th>Element</th>
@@ -74,7 +74,7 @@ The following table provides version and version-support information about the V
         <td>97.108, 170.78</td>
     </tr>
     <tr>
-        <td>Compatible MySQL for PCF version(s)</td>
+        <td>Compatible MySQL for Pivotal Platform version(s)</td>
         <td>v2.4.x and v2.5.x</td>
      </tr>
     <tr>
@@ -98,13 +98,13 @@ The following table provides version and version-support information about the V
 
 ## <a id="reqs"></a> Requirements
 
-The Vormetric Transparent Encryption for PCF has the following requirements:
+The Vormetric Transparent Encryption for Pivotal Platform has the following requirements:
 
 * You must have Vormetric Data Security Manager running software v6.0.3 or later.
 * You must have an active account with Thales e-Security for the support of Vormetric encryption product suite.
 * You must obtain a license for the Vormetric encryption product suite with the Live Data Transformation (LDT) feature.
-* You must install Offline Java Buildpack in PCF.
-* You must use MySQL for PCF v2.4.0 or later.
+* You must install Offline Java Buildpack in Pivotal Platform.
+* You must use MySQL for Pivotal Platform v2.4.0 or later.
 
 
 ## <a id="limitations"></a> Limitations
@@ -113,14 +113,14 @@ The Vormetric Transparent Encryption for PCF has the following requirements:
 required before using the tile.
 * Shared secret for VTE registration must be the same for all host groups and domains in the Vormetric
 Data Security Manager.
-* Per-instance activation in one PCF environment is not supported.
+* Per-instance activation in one Pivotal Platform environment is not supported.
 * The release was tested on Azure and Google Cloud Platform and is expected to work with other IaaSes as well.
 
 
 ## <a id="feedback"></a> Feedback
 
 If you have a feature request, questions, or information about a bug,
-email [Pivotal Cloud Foundry Feedback](mailto:cf-feedback@pivotal.io).
+email [Pivotal Platform Feedback](mailto:cf-feedback@pivotal.io).
 
 For Vormetric-specific issues, questions, or feedback, contact Support using one of the following methods:
 

@@ -1,17 +1,17 @@
 ---
-title: Installing and Configuring Vormetric Transparent Encryption for PCF (Beta)
+title: Installing and Configuring Vormetric Transparent Encryption for Pivotal Platform (Beta)
 owner: Partners
 ---
 
 This topic describes how to install and configure the Vormetric Transparent Encryption (VTE) for Pivotal Cloud
-Foundry (PCF) tile. Users of the tile are assumed to be familiar with Vormetric security concepts and configuration of DSM.
+Foundry (Pivotal Platform) tile. Users of the tile are assumed to be familiar with Vormetric security concepts and configuration of DSM.
 
 
 ##<a id='workflow'></a> Before Installing and Configuring the VTE Tile
 
 The following steps are a high-level workflow to enabling the VTE tile:
 
-1. Choose a mapping strategy to support multi-tenancy and get familiar with the naming conventions used in the tile. Review both the *Mapping PCF Organizations and Spaces to Vormetric Domains* and the *Configuring Vormetric DSM* sections.
+1. Choose a mapping strategy to support multi-tenancy and get familiar with the naming conventions used in the tile. Review both the *Mapping Pivotal Platform Organizations and Spaces to Vormetric Domains* and the *Configuring Vormetric DSM* sections.
 
 1. Configure the VTE tile so that it conforms to the mapping strategy in the previous step.
 
@@ -32,17 +32,17 @@ To install and configure the VTE tile, do the following:
 
 1. Under the **Import a Product** button, click **+** next to the version number of the product. This adds the tile to your staging area.
 
-1. Click the newly added **Vormetric Transparent Encryption for PCF** tile.
+1. Click the newly added **Vormetric Transparent Encryption for Pivotal Platform** tile.
 
 1. From the **Settings** tab, select **Registration Service Config**. The configuration parameters for the Registration Service, which maps Pivotal organizations and spaces to Vormetric domains, are displayed as in the image below.
   ![Registration Service Config](images/rsc.png)
 
 1. For **Data Security Manager (DSM) host name**, enter the fully qualified domain name (FQDN) of the DSM with which the VTE instances register.
 
-1. For **DSM Domain Mapping**, select how Pivotal organizations and spaces map to Vormetric domains. See the [Mapping PCF Organizations and Spaces to Vormetric Domains](#mapping) section for details on the mapping options.
+1. For **DSM Domain Mapping**, select how Pivotal organizations and spaces map to Vormetric domains. See the [Mapping Pivotal Platform Organizations and Spaces to Vormetric Domains](#mapping) section for details on the mapping options.
 
 1. For **Shared Secret for VTE registration with DSM**, enter the shared secret of the host group to which the VTE instances belong.
-<p class='note'><strong>Note:</strong> This shared secret must be the same for all host groups configured to work with PCF.</p>
+<p class='note'><strong>Note:</strong> This shared secret must be the same for all host groups configured to work with Pivotal Platform.</p>
 
 1. Click **Save**. This completes the configuration for the Registration Service.
 
@@ -62,7 +62,7 @@ To install and configure the VTE tile, do the following:
 1. Return to the Ops Manager Installation Dashboard and click **Apply Changes** to complete the installation of the VTE tile.
 
 
-## <a id='mapping'></a> Mapping PCF Organizations and Spaces to Vormetric Domains
+## <a id='mapping'></a> Mapping Pivotal Platform Organizations and Spaces to Vormetric Domains
 
 The following table explains the mapping options to support multi-tenancy. Follow the naming convention below when provisioning DSM domains.
 
@@ -73,15 +73,15 @@ The following table explains the mapping options to support multi-tenancy. Follo
       <th>Example</th>
       <tr>
           <td>Organization</td>
-          <td>`PCF.<organization>`</td>
-          <td>The sanitized organization name\* prefixed with `PCF.`.</td>
-          <td>`Thales` &rarr; `PCF.Thales`</td>
+          <td>`Pivotal Platform.<organization>`</td>
+          <td>The sanitized organization name\* prefixed with `Pivotal Platform.`.</td>
+          <td>`Thales` &rarr; `Pivotal Platform.Thales`</td>
       </tr>
       <tr>
         <td>Organization Space</td>
-        <td>`PCF.<organization>.<space>`</td>
+        <td>`Pivotal Platform.<organization>.<space>`</td>
         <td>The sanitized space name\* is limited to 20 characters. The sanitized organization name\* is limited to 60 characters.</td>
-        <td>`Thales` `Dev` &rarr; `PCF.Thales.Dev`</td>
+        <td>`Thales` `Dev` &rarr; `Pivotal Platform.Thales.Dev`</td>
       </tr>
       <tr>
           <td>Single Fixed Domain</td>
@@ -93,7 +93,7 @@ The following table explains the mapping options to support multi-tenancy. Follo
   \*The domain name is limited to 64 characters.  The name must consist of alphanumeric characters and must start with an alpha character.  The only non\-alphanumeric characters allowed are the dot
   \( \. \), the underscore \( \_ \), and the dash \( \- \)\.
 
-The naming convention for host group is `PCF_<UPPER-CASE-OF-DEPLOYMENT-APP-NAME>`. For example, For example, `MySQL` &rarr; `PCF_MYSQL`.
+The naming convention for host group is `Pivotal Platform_<UPPER-CASE-OF-DEPLOYMENT-APP-NAME>`. For example, For example, `MySQL` &rarr; `Pivotal Platform_MYSQL`.
 Host descriptions are automatically generated in the format of `/<organization>/<space>/<service_instance_name>`.
 
 
@@ -104,7 +104,7 @@ descriptions of each configuration, information about the administrator roles an
 
 To configure the DSM, do the following:
 
-1. (System Security administrator) Create a domain that maps to the configured Pivotal organization and space in which the service instances will reside (for example, MySQL service instances). See the [Mapping PCF Organizations and Spaces to Vormetric Domains](#mapping) section for the naming convention for the domain name.
+1. (System Security administrator) Create a domain that maps to the configured Pivotal organization and space in which the service instances will reside (for example, MySQL service instances). See the [Mapping Pivotal Platform Organizations and Spaces to Vormetric Domains](#mapping) section for the naming convention for the domain name.
 
 1. (System administrator) Create a Domain administrator for the domain created in the previous step.
 
@@ -142,7 +142,7 @@ The Key Selection Rules for an LDT policy must use a symmetric versioned key for
 **Detailed view of the Key Selection Rules**
 ![usersetconfigs](images/keyselectionruledetails.PNG)
 
-*	**Host Group** — Create a host group following the naming convention described in the [Mapping PCF Organizations and Spaces to Vormetric Domains](#mapping) section. Make sure the **Enable FS Agent Communication** option for the host group is selected.
+*	**Host Group** — Create a host group following the naming convention described in the [Mapping Pivotal Platform Organizations and Spaces to Vormetric Domains](#mapping) section. Make sure the **Enable FS Agent Communication** option for the host group is selected.
 
 * **Host Settings** — Configure the host settings for the host group with the following rules:
 
@@ -162,7 +162,7 @@ The Key Selection Rules for an LDT policy must use a symmetric versioned key for
 **Host Settings for the Host Group**
 ![hostsettings](images/host-settings.png)
 
-*	**Shared Secret** — Create the same shared secret for ALL host groups configured to work with PCF.
+*	**Shared Secret** — Create the same shared secret for ALL host groups configured to work with Pivotal Platform.
 
 **Shared Secret for the Host Group**
 ![hostgroup-regsecret](images/hostgroup-regsecret.png)
