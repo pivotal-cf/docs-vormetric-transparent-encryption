@@ -1,22 +1,22 @@
 ---
-title: Using Vormetric Transparent Encryption for Pivotal Platform (Beta)
+title: Using Vormetric Transparent Encryption for VMware Tanzu (Beta)
 owner: Partners
 ---
 
-This topic describes the use of the Vormetric Transparent Encryption (VTE) for Pivotal Platform tile after it has been successfully installed. This topic also provides an overview of the VTE tile and troubleshooting information to help address some of the issues that may arise during or after the installation.
+This topic describes the use of the Vormetric Transparent Encryption (VTE) for VMware Tanzu tile after it has been successfully installed. This topic also provides an overview of the VTE tile and troubleshooting information to help address some of the issues that may arise during or after the installation.
 
 
-## <a id='usevtetile'></a> Use VTE for Pivotal Platform
+## <a id='usevtetile'></a> Use VTE for VMware Tanzu
 
-The VTE for Pivotal Platform works transparently after the successful installation and configuration of all the required components (VTE, MySQL, and Data Security Manager [DSM]). Thereafter, the VTE tile protects the data stored within the Pivotal Platform product with file-level encryption and access control.
+The VTE for VMware Tanzu works transparently after the successful installation and configuration of all the required components (VTE, MySQL, and Data Security Manager [DSM]). Thereafter, the VTE tile protects the data stored within the VMware Tanzu product with file-level encryption and access control.
 
 
 ## <a id='overview'></a> Overview
 
-The VTE add-on is a BOSH runtime configuration used to protect on-demand products deployed in the Pivotal Platform platform. The VTE addon is packaged as a tile with the following two components:
+The VTE add-on is a BOSH runtime configuration used to protect on-demand products deployed in the VMware Tanzu platform. The VTE addon is packaged as a tile with the following two components:
 
 * VTE BOSH: a package of VTE binaries and scripts for life-cycle management
-* Registration Service: a web application responsible for generating registration data based on a mapping between a Pivotal Platform organization and space to a Vormetric DSM domain
+* Registration Service: a web application responsible for generating registration data based on a mapping between a VMware Tanzu organization and space to a Vormetric DSM domain
 
 The VTE BOSH release collocates with each VM instance of the product it protects. The Registration Service, which supports multi-tenancy, is an application deployed in a Diego Cell. The following diagram depicts interactions among the components.
 
@@ -40,7 +40,7 @@ After the VTE binary is installed in the designated directory of `/var/vcap/jobs
 
 ### <a id='startstopsequence'></a> Startup and Shutdown Sequence
 
-To ensure the data stored within the Pivotal Platform product is protected from the beginning, the VTE must start _before_ the service instance of the deployment application starts and stop _after_ the instance stops. The following diagrams illustrate the dependency between the VTE and the service instance it protects:
+To ensure the data stored within the VMware Tanzu product is protected from the beginning, the VTE must start _before_ the service instance of the deployment application starts and stop _after_ the instance stops. The following diagrams illustrate the dependency between the VTE and the service instance it protects:
 
 **Startup Sequence**
   ![Startup Sequence](images/VTEStartupSequence.PNG)
@@ -99,7 +99,7 @@ curl -u 1f6261c0a2f91e39:hb2iua6dyf6mmNvocuiOvS_J-0by2XW1 \
   "appName":"mysql",
   "serverHost":"jblas-dsm.westus.cloudapp.azure.com",
   "domain":"pivotal",
-  "hostGroup":"Pivotal Platform_MYSQL",
+  "hostGroup":"VMware Tanzu_MYSQL",
   "secret":"Admin12345#",
   "hostDescription":"/Thales/dev/mysql224-small",
   "orgName":"Thales",
@@ -128,15 +128,15 @@ LOGIN_HOST = https://login.sys.pie-srt-26.cfplatformeng.com
 CC_HOST = https://api.sys.pie-srt-26.cfplatformeng.com
 UAA_HOST = https://uaa.sys.pie-srt-26.cfplatformeng.com
 CF_ADMIN_USERNAME = system_services
-CF_ADMIN_PASSWORD = <redacted>
+CF_ADMIN_TAS for VMsSWORD = <redacted>
 VCAP_APPLICATION = {"application_id":"1e983426-b75e-4491-a6ea-21eda2f1a104","application_name":"vormetric-registration-service-0.0.93","application_uris":["vor-reg-svc.cfapps.pie-srt-26.cfplatformeng.com"],"application_version":"2f7a8ab5-727f-4db8-bd52-164d7d99a54f","cf_api":"https://api.sys.pie-srt-26.cfplatformeng.com","host":"0.0.0.0","instance_id":"2cd1a409-7f3c-42bd-5f98-da5c","instance_index":0,"limits":{"disk":1024,"fds":16384,"mem":1024},"name":"vormetric-registration-service-0.0.93","port":8080,"space_id":"3a1d9986-c44e-4b74-b39f-86ba77318834","space_name":"vte-addon-space","uris":["vor-reg-svc.cfapps.pie-srt-26.cfplatformeng.com"],"version":"2f7a8ab5-727f-4db8-bd52-164d7d99a54f"}
 REG_DSM_SERVER_HOST = jblas-dsm.westus.cloudapp.azure.com
 REG_DSM_ADMIN_USERNAME =
-REG_DSM_ADMIN_PASSWORD = <redacted>
+REG_DSM_ADMIN_TAS for VMsSWORD = <redacted>
 REG_SHARED_SECRET = <redacted>
 REG_DOMAIN_MAPPING = {"value":"fixed","selected_option":{"reg_fixed_domain":"pivotal"}}
 SECURITY_USER_NAME = cc17110846207e7e
-SECURITY_USER_PASSWORD = <redacted>
+SECURITY_USER_TAS for VMsSWORD = <redacted>
 ===== ENV =====
 ```
 
@@ -235,6 +235,6 @@ The `pre-start.stderr.log` shows that the curl command to the Registration Servi
 
 #### Explanation
 
-The MySQL for Pivotal Platform tile is not configured to allow outbound internet access from service instances.
-In the **Global Settings** pane of MySQL for Pivotal Platform, enable **Assign Public IP Addresses for all Service VMs**.
+The MySQL for VMware Tanzu tile is not configured to allow outbound internet access from service instances.
+In the **Global Settings** pane of MySQL for VMware Tanzu, enable **Assign Public IP Addresses for all Service VMs**.
 For information, see [Configure Global Settings](https://docs.pivotal.io/p-mysql/install-config.html#global).
